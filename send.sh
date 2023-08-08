@@ -12,11 +12,13 @@ case ${1,,} in
   "success" )
     EMBED_COLOR=3066993
     STATUS_MESSAGE="Passed"
+    THUMBNAIL_URL="./public/icons/success.png"
     ;;
 
   "failure" )
     EMBED_COLOR=15158332
     STATUS_MESSAGE="Failed"
+    THUMBNAIL_URL="./public/icons/failure.png"
     ;;
 
   * )
@@ -95,6 +97,9 @@ WEBHOOK_DATA='{
         "inline": true
       }
     ],
+    "thumbnail": {
+      "url": "'$THUMBNAIL_URL'"
+    },
     "timestamp": "'"$TIMESTAMP"'"
   } ]
 }'
