@@ -12,19 +12,19 @@ case ${1,,} in
   "success" )
     EMBED_COLOR=3066993
     STATUS_MESSAGE="Passed"
-    THUMBNAIL_URL="https://github.com/elendil7/github-actions-discord-webhook/blob/master/public/icons/success.png"
+    THUMBNAIL_URL="https://raw.githubusercontent.com/elendil7/github-actions-discord-webhook/master/public/icons/success.png"
     ;;
 
   "failure" )
     EMBED_COLOR=15158332
     STATUS_MESSAGE="Failed"
-    THUMBNAIL_URL="https://github.com/elendil7/github-actions-discord-webhook/blob/master/public/icons/failure.png"
+    THUMBNAIL_URL="https://raw.githubusercontent.com/elendil7/github-actions-discord-webhook/master/public/icons/failure.png"
     ;;
 
   * )
     STATUS_MESSAGE="Status Unknown"
     EMBED_COLOR=0
-    THUMBNAIL_URL="https://github.com/elendil7/github-actions-discord-webhook/blob/master/public/icons/unknown.png"
+    THUMBNAIL_URL="https://raw.githubusercontent.com/elendil7/github-actions-discord-webhook/master/public/icons/unknown.png"
     ;;
 esac
 
