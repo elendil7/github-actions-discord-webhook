@@ -18,3 +18,11 @@
           shell: bash
     ```
 1. Enjoy!
+
+## Attribution
+
+### Icons (used in discord embed)
+
+<a href="https://www.flaticon.com/free-icons/tick" title="tick icons">Tick icons created by Roundicons - Flaticon</a>
+
+<a href="https://www.flaticon.com/free-icons/close" title="close icons">Close icons created by Vectors Market - Flaticon</a>
