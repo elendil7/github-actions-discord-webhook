@@ -79,29 +79,29 @@ WEBHOOK_DATA='{
   "embeds": [ {
     "color": '$EMBED_COLOR',
     "author": {
-      "name": "'"$STATUS_MESSAGE"': '"$WORKFLOW_NAME"' ('"${HOOK_OS_NAME}"') - '"$GITHUB_REPOSITORY"'",
+      "name": "'$(echo "$STATUS_MESSAGE: $WORKFLOW_NAME ($HOOK_OS_NAME) - $GITHUB_REPOSITORY" | cut -c 1-256)'",
       "url": "'$ACTION_URL'",
       "icon_url": "'$AVATAR'"
     },
-    "title": "'"$COMMIT_SUBJECT"'",
-    "url": "'"$COMMIT_OR_PR_URL"'",
-    "description": "'"${COMMIT_MESSAGE//$'\n'/ }"\\n\\n"$CREDITS"'",
+    "title": "'$(echo "$COMMIT_SUBJECT" | cut -c 1-256)'",
+    "url": "'$COMMIT_OR_PR_URL'",
+    "description": "'$(echo "${COMMIT_MESSAGE//$'\n'/ }" | cut -c 1-4096)\\n\\n$CREDITS'",
     "fields": [
       {
         "name": "Commit",
-        "value": "'"[\`${GITHUB_SHA:0:7}\`](${COMMIT_URL})"'",
+        "value": "'[$(echo "${GITHUB_SHA:0:7}" | cut -c 1-256)]($COMMIT_URL)'",
         "inline": true
       },
       {
-        "name": "'"$BRANCH_OR_PR"'",
-        "value": "'"[\`${BRANCH_NAME}\`](${BRANCH_OR_PR_URL})"'",
+        "name": "'$BRANCH_OR_PR'",
+        "value": "'[$(echo "$BRANCH_NAME" | cut -c 1-256)]($BRANCH_OR_PR_URL)'",
         "inline": true
       }
     ],
     "thumbnail": {
       "url": "'$THUMBNAIL_URL'"
     },
-    "timestamp": "'"$TIMESTAMP"'"
+    "timestamp": "'$TIMESTAMP'"
   } ]
 }'
 
