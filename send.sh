@@ -66,8 +66,16 @@ if [ "$GITHUB_EVENT_NAME" == "pull_request" ]; then
 	
 	WORK_DIR=$(dirname ${BASH_SOURCE[0]})
 	PULL_REQUEST_TITLE=$(ruby $WORK_DIR/get_pull_request_title.rb $PULL_REQUEST_ENDPOINT)
-	
-	COMMIT_SUBJECT=$PULL_REQUEST_TITLE
+
+  # Sanitize the COMMIT_SUBJECT field in case it exceeds length (typically due to error when fetching PR title)
+  MAX_TITLE_LENGTH=256
+  COMMIT_SUBJECT=""
+  if (( ${#COMMIT_SUBJECT} > MAX_TITLE_LENGTH )); then
+    COMMIT_SUBJECT="Error: Title exceeds character limit"
+  else
+	  COMMIT_SUBJECT=$PULL_REQUEST_TITLE
+  fi
+
 	COMMIT_MESSAGE="Pull Request #$PR_NUM"
 	ACTION_URL="$BRANCH_OR_PR_URL/checks"
 	COMMIT_OR_PR_URL=$BRANCH_OR_PR_URL
@@ -83,7 +91,7 @@ WEBHOOK_DATA='{
       "url": "'$ACTION_URL'",
       "icon_url": "'$AVATAR'"
     },
-    "title": "'$(echo "$COMMIT_SUBJECT" | cut -c 1-256)'",
+    "title": "'$COMMIT_SUBJECT'",
     "url": "'$COMMIT_OR_PR_URL'",
     "description": "'$(echo "${COMMIT_MESSAGE//$'\n'/ }" | cut -c 1-4096)\\n\\n$CREDITS'",
     "fields": [
