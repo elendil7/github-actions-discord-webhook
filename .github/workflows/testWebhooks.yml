@@ -1,0 +1,27 @@
+name: Test Discord webhook
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  testDiscordWebhook:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - uses: actions/setup-ruby@v1
+      - name: Send Discord Webhook Notification
+        if: always()
+        env:
+          JOB_STATUS: ${{ job.status }}
+          WEBHOOK_URL: ${{secrets.DISCORD_WEBHOOK_URL}}
+          HOOK_OS_NAME: ${{ runner.os }}
+          WORKFLOW_NAME: ${{ github.workflow }}
+        run: |
+          git clone https://github.com/elendil7/github-actions-discord-webhook webhook
+          bash webhook/send.sh $JOB_STATUS $WEBHOOK_URL
+        shell: bash
