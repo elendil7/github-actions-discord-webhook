@@ -108,6 +108,13 @@ WEBHOOK_DATA='{
 for ARG in "$@"; do
   echo -e "[Webhook]: Sending webhook to Discord...\\n";
 
-  (curl --fail --progress-bar -A "GitHub-Actions-Webhook" -H Content-Type:application/json -H X-Author:k3rn31p4nic#8383 -d "${WEBHOOK_DATA//	/ }" "$ARG" \
-  && echo -e "\\n[Webhook]: Successfully sent the webhook.") || echo -e "\\n[Webhook]: Unable to send webhook."
+  RESPONSE=$(curl --fail --progress-bar -A "GitHub-Actions-Webhook" -H Content-Type:application/json -H X-Author:k3rn31p4nic#8383 -d "${WEBHOOK_DATA//	/ }" -w "\n%{http_code}" -o /dev/null "$ARG")
+  STATUS_CODE=$(echo "$RESPONSE" | tail -n1)
+  ERROR_RESPONSE=$(echo "$RESPONSE" | sed '$d')
+
+  if [ "$STATUS_CODE" -eq 200 ]; then
+    echo -e "[Webhook]: Successfully sent the webhook."
+  else
+    echo -e "\\n[Webhook]: Unable to send webhook. Status code: $STATUS_CODE, error: $ERROR_RESPONSE"
+  fi
 done
