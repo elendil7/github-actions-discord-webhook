@@ -112,7 +112,8 @@ for ARG in "$@"; do
   STATUS_CODE=$(echo "$RESPONSE" | tail -n1)
   ERROR_RESPONSE=$(echo "$RESPONSE" | sed '$d')
 
-  if [ "$STATUS_CODE" -eq 200 ]; then
+  # Check for good status code response. If error, show error message.
+  if [ "$STATUS_CODE" -eq 200 ] || [ "$STATUS_CODE" -eq 204 ] || [ "$STATUS_CODE" -eq 201 ] || [ "$STATUS_CODE" -eq 202 ]; then
     echo -e "[Webhook]: Successfully sent the webhook."
   else
     echo -e "\\n[Webhook]: Unable to send webhook. Status code: $STATUS_CODE, error: $ERROR_RESPONSE"
