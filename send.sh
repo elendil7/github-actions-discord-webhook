@@ -89,12 +89,12 @@ WEBHOOK_DATA='{
     "fields": [
       {
         "name": "Commit",
-        "value": "'[$(echo "${GITHUB_SHA:0:7}" | cut -c 1-256)]($COMMIT_URL)'",
+        "value": "'"[\`${GITHUB_SHA:0:7}\`](${COMMIT_URL})"'",
         "inline": true
       },
       {
-        "name": "'$BRANCH_OR_PR'",
-        "value": "'[$(echo "$BRANCH_NAME" | cut -c 1-256)]($BRANCH_OR_PR_URL)'",
+        "name": "'"$BRANCH_OR_PR"'",
+        "value": "'"[\`${BRANCH_NAME}\`](${BRANCH_OR_PR_URL})"'",
         "inline": true
       }
     ],
@@ -104,7 +104,6 @@ WEBHOOK_DATA='{
     "timestamp": "'$TIMESTAMP'"
   } ]
 }'
-
 for ARG in "$@"; do
   echo -e "[Webhook]: Sending webhook to Discord...\\n";
 
