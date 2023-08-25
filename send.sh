@@ -76,6 +76,10 @@ if [ "$GITHUB_EVENT_NAME" == "pull_request" ]; then
 	  COMMIT_SUBJECT=$PULL_REQUEST_TITLE
   fi
 
+  # Sanitize the commit subject; remove everything except characters allowed in a discord embed title
+  # https://discordapp.com/developers/docs/resources/channel#embed-limits
+  COMMIT_SUBJECT=$(echo "$COMMIT_SUBJECT" | sed -E 's/[^a-zA-Z0-9!"#$%&\'"'"'()*+,\-./:;<=>?@\[\]^_`{|}~ ]//g')
+
 	COMMIT_MESSAGE="Pull Request #$PR_NUM"
 	ACTION_URL="$BRANCH_OR_PR_URL/checks"
 	COMMIT_OR_PR_URL=$BRANCH_OR_PR_URL
