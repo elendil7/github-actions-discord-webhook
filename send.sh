@@ -117,5 +117,7 @@ for ARG in "$@"; do
     echo -e "[Webhook]: Successfully sent the webhook."
   else
     echo -e "\\n[Webhook]: Unable to send webhook. Status code: $STATUS_CODE, error: $ERROR_RESPONSE"
+    # Log the webhook body for diagnostic purposes.
+    echo -e "\\n[Webhook]: Webhook was: $WEBHOOK_DATA"
   fi
 done
